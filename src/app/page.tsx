@@ -1,8 +1,16 @@
 "use client";
 
-import { Home as HomeIcon, Search, Library } from "lucide-react";
+import {
+  Home as HomeIcon,
+  Search,
+  Library,
+  ChevronLeft,
+  ChevronRight,
+  Play,
+} from "lucide-react";
 import { api, token } from "@/services/api";
 import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -41,15 +49,15 @@ export default function Home() {
       <div className="flex flex-1">
         <aside className="w-72 bg-zinc-950 p-6">
           <nav className="flex-col font-semibold text-xs space-y-4 text-zinc-200">
-            <a href="" className="flex gap-2 items-center">
+            <a href="#" className="flex gap-2 items-center">
               <HomeIcon />
               Início
             </a>
-            <a href="" className="flex gap-2 items-center">
+            <a href="#" className="flex gap-2 items-center">
               <Search />
               Buscar
             </a>
-            <a href="" className="flex gap-2 items-center">
+            <a href="#" className="flex gap-2 items-center">
               <Library />
               Sua Biblioteca
             </a>
@@ -62,7 +70,7 @@ export default function Home() {
               playlist?.items.map((item: any) => (
                 <a
                   key={item.name}
-                  href=""
+                  href="#"
                   className="text-sm text-zinc-400 hover:text-zinc-100"
                 >
                   {item.name}
@@ -71,7 +79,42 @@ export default function Home() {
             )}
           </nav>
         </aside>
-        <main className="flex-1 p-6">Main</main>
+        <main className="flex-1 p-6">
+          <div className="flex items-center gap-4">
+            <button className="p-1 rounded-full bg-black/40">
+              <ChevronLeft />
+            </button>
+            <button className="p-1 rounded-full bg-black/40">
+              <ChevronRight />
+            </button>
+          </div>
+
+          <h1 className="font-semibold text-4xl mt-10">Good Afternoon</h1>
+
+          <div className="grid grid-cols-3 gap-6 mt-5">
+            {loading ? (
+              <p>Carregando...</p>
+            ) : (
+              playlist?.items.map((item: any) => (
+                <a
+                  href="#"
+                  key={item.name}
+                  className="bg-white/5 hover:bg-white/10 rounded flex items-center gap-3 overflow-hidden group"
+                >
+                  <img
+                    src={item.images[0].url}
+                    alt="Imagens de capas das playlists"
+                    style={{ width: "104px", height: "104px" }}
+                  />
+                  <strong>{item.name}</strong>
+                  <button className="bg-green-400 rounded-full p-2 text-black ml-auto mr-8 w-10 h-10 invisible group-hover:visible">
+                    <Play fill="black" />
+                  </button>
+                </a>
+              ))
+            )}
+          </div>
+        </main>
       </div>
       <footer className="bg-zinc-800 border-t border-zinc-700 p-6">
         Footer
